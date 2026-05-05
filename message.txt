@@ -1,0 +1,254 @@
+Overordnet ændring
+
+Notebooken er gået fra en version med mange ekstra forklaringer, dublerede tekstblokke og kommenterede “mulige rettelser” til en mere renset version, hvor rettelserne er skrevet ind som almindelig tekst.
+
+Den vigtigste faglige ændring er, at ordet “støj” flere steder er ændret til:
+
+“kortsigtede udsving / støjlignende variation”
+
+Det er en forbedring, fordi klimadata ikke nødvendigvis kun indeholder sensorstøj. Hurtige udsving kan også være reelle vejrændringer.
+
+Vigtige ting der er fjernet
+1. Den store introduktion i starten er fjernet
+
+Før startede notebooken med:
+
+titel
+miniprojektbeskrivelse
+opgavespørgsmål for workshop 1 og 2
+datasæt
+vigtig begrænsning om referencefilen uden NaNs
+
+Det hele ser ud til at være fjernet i den nye version.
+
+Konsekvens: Notebooken bliver kortere, men mister også noget kontekst. Jeg ville faktisk anbefale at beholde en kort introduktion, fordi den forklarer opgavens ramme tydeligt.
+
+2. “Lille ændring fra teksten ovenover” er fjernet
+
+I den gamle version stod både den oprindelige forklaring af dataimputering og en alternativ omskrivning.
+
+I den nye version er kun den omskrevne version tilbage.
+
+Det er en god oprydning, fordi notebooken ikke længere viser interne rettelsesnoter.
+
+3. Flere “Mulige rettelse”-sektioner er fjernet
+
+Der var mange steder, hvor der stod fx:
+
+--------------------------- Mulige rettelse
+
+og derefter en alternativ forklaring eller et alternativt kodeforslag.
+
+Disse sektioner er enten fjernet eller indarbejdet i den nye tekst.
+
+Det er en klar forbedring, fordi notebooken virker mere færdig og mindre som et kladdedokument.
+
+4. Kommenteret kode til dubletfjernelse er fjernet
+
+I den gamle version lå der et stort kommenteret kodeblok-forslag til at:
+
+markere train/test med source
+kombinere datasæt
+finde dubletdatoer
+fjerne dubletdatoer
+bevare første forekomst
+
+I den nye version er den kommenterede blok fjernet.
+
+Vigtigt: Den nye tekst siger, at dubletdatoen 2017-01-01 fjernes. Men i det udsnit du har sendt, kan jeg ikke tydeligt se, om selve koden faktisk gør det. Hvis koden ikke er implementeret tidligere i cellen, så er der en uoverensstemmelse mellem tekst og kode.
+
+5. classification_report er fjernet fra imports
+
+Før:
+
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, classification_report, roc_auc_score
+
+Nu:
+
+from sklearn.metrics import accuracy_score, f1_score, precision_score, recall_score, roc_auc_score
+
+Betydning: Hvis classification_report ikke bruges længere, er det fint. Hvis den stadig bruges senere i notebooken, vil koden fejle.
+
+6. BaseEstimator og TransformerMixin er fjernet
+
+Før blev dette importeret:
+
+from sklearn.base import BaseEstimator, TransformerMixin
+
+Det er fjernet i den nye version.
+
+Betydning: Det er fint, hvis der ikke længere bruges en custom transformer. Hvis der stadig findes en klasse senere i notebooken, der arver fra BaseEstimator eller TransformerMixin, vil koden fejle.
+
+Vigtige ting der er tilføjet eller ændret
+1. Der er tilføjet en mere præcis AUC-konklusion
+
+Før stod der mere generelt:
+
+Hvis AUC er tæt på 0.5, ligner mønsteret MCAR. Hvis flere AUC-værdier ligger klart over 0.6, tyder det på MAR.
+
+Nu står der mere konkret:
+
+AUC-værdierne ligger mellem ca. 0,484 og 0,510.
+
+Og derfor vurderes datasættet som:
+
+MCAR-lignende, men MNAR kan ikke afvises uden viden om dataindsamlingen.
+
+Det er en faglig forbedring, fordi konklusionen nu bygger på de faktiske resultater i notebooken.
+
+2. Der er tilføjet en klar konklusion om bedste imputeringsmetode
+
+Ny tekst:
+
+Den iterative metode giver lavest numerisk fejl og er derfor bedst til de numeriske variable. For kategoriske variable giver median/mode og iterativ metode samme resultat, fordi begge bruger mode-imputering for kategorier.
+
+Det er en god tilføjelse, fordi den gør sammenligningen af imputeringerne mere tydelig.
+
+3. Der er tilføjet en ny markdown-celle om classifier-test
+
+Ny celle:
+
+Formål: At sammenligne imputeringernes praktiske nytte i en classifier-test...
+Metode: Der sammenlignes complete-case uden imputering...
+Fortolkning: Iterativ imputering klarer sig bedst på F1 for Yes...
+
+Det er en forbedring, fordi det forklarer, hvorfor classifier-testen er med, og hvordan resultaterne skal forstås.
+
+4. Del 2 har fået en ny introduktion
+
+Før gik Del 2 næsten direkte til indlæsning.
+
+Nu er der tilføjet:
+
+# Del 2 – Kortsigtede udsving i tidsseriedata og vinduesmetoden
+
+med:
+
+formål
+metode
+fortolkning
+
+Det er en god strukturel forbedring, fordi læseren nu ved, hvad Del 2 skal vise.
+
+5. Afsnit 2.1 er omskrevet
+
+Før:
+
+Train- og testfilerne kombineres for at få hele tidsforløbet...
+
+Nu er det opdelt i:
+
+Formål
+Metode
+Fortolkning
+
+Det gør teksten mere opgaveorienteret og eksamensvenlig.
+
+6. Afsnit 2.2 er omskrevet
+
+Før handlede det om:
+
+trend
+sæsonmønstre
+kortsigtede udsving
+ekstreme værdier
+
+Nu er det mere kort og struktureret med:
+
+formål
+metode
+fortolkning
+
+Det er mere ryddeligt, men lidt mindre detaljeret end før.
+
+7. Outlier-afsnittet er blevet mere konkret
+
+Ny tekst nævner:
+
+Der er 7 ekstreme outliers i meanpressure, fx 7679 og -3.
+
+Det er en god forbedring, fordi det giver konkrete eksempler og viser, hvorfor outlier-håndtering er nødvendig.
+
+8. “Støj” er ændret til “kortsigtede udsving / støjlignende variation”
+
+Det sker flere steder:
+
+Før:
+
+Støj i tidsseriedata
+noise ratio
+støj_t
+
+Nu:
+
+kortsigtede udsving / støjlignende variation
+ratio
+kortsigtet udsving_t
+
+Det er nok den vigtigste faglige ændring i hele notebooken.
+
+Det gør analysen mere korrekt, fordi residualer fra et glidende gennemsnit ikke nødvendigvis er “ren støj”.
+
+9. Delkonklusionen for Del 2 er renset
+
+Den gamle version havde både en oprindelig delkonklusion og en “mulig rettelse”.
+
+Den nye version har kun én samlet delkonklusion.
+
+Det er en forbedring, fordi notebooken fremstår færdig.
+
+10. Den samlede konklusion er ændret lidt
+
+Før:
+
+4. Tidsseriestøj: Klimadata visualiseres, støjgrad estimeres...
+
+Nu:
+
+4. Tidsseriedata: Klimadata visualiseres, korte udsving / støjlignende variation estimeres...
+
+Det passer bedre til resten af ændringerne.
+
+Tekniske ændringer
+Execution count er nulstillet
+
+Før havde cellerne fx:
+
+"execution_count": 104
+
+Nu:
+
+"execution_count": null
+
+Det betyder sandsynligvis, at output/eksekveringshistorik er nulstillet eller notebooken er gemt uden aktive kørselsnumre.
+
+Python-version er ændret
+
+Før:
+
+"version": "3.13.6"
+
+Nu:
+
+"version": "3.13.7"
+
+Kernel-display er også ændret fra:
+
+Python 3
+
+til:
+
+.venv (3.13.7)
+
+Det betyder, at notebooken nu sandsynligvis kører i et virtuelt miljø.
+
+Mulige problemer jeg ville tjekke
+
+Der er især tre ting, jeg ville kontrollere:
+
+Dubletdatoen 2017-01-01
+Teksten siger, at den fjernes, men i det viste kodeudsnit kan jeg ikke se selve implementeringen. Sørg for, at koden faktisk bruger drop_duplicates.
+Dubleret afsnit 2.4
+I den nye version ser det ud som om afsnit 2.4 optræder to gange med næsten samme titel og forklaring. Det bør tjekkes, så notebooken ikke har gentaget tekst.
+Imports
+Tjek om classification_report, BaseEstimator eller TransformerMixin stadig bruges senere. Hvis ja, skal importen tilbage. Hvis nej, er det fint, at de er fjernet.
